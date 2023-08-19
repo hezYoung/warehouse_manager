@@ -31,6 +31,7 @@ public class LoginController {
     private LoginService loginService;
     @Autowired
     private TokenUtils tokenUtils;
+
     @GetMapping("/captcha/captchaImage")
     public void captchaImage(HttpServletResponse response) throws IOException {
         ServletOutputStream out = null;
@@ -54,28 +55,33 @@ public class LoginController {
 
 //        校验验证码：
 
-        if(!redisTemplate.hasKey(loginUser.getVerificationCode())){
+        if (!redisTemplate.hasKey(loginUser.getVerificationCode())) {
             return Result.err(Result.CODE_ERR_BUSINESS, "验证码不正确！");
         }
 
         User userByCode = loginService.findUserByCode(loginUser.getUserCode());
         if (userByCode != null) {
             if (userByCode.getUserState().equals(WarehouseConstants.USER_STATE_PASS)) {//查到的用户状态是已审核
-                String password  = DigestUtil.hmacSign(loginUser.getUserPwd());
+                String password = DigestUtil.hmacSign(loginUser.getUserPwd());
                 if (password.equals(userByCode.getUserPwd())) {
                     //密码相匹配
                     CurrentUser currentUser = new CurrentUser(userByCode.getUserId(), userByCode.getUserCode(), userByCode.getUserName());
                     String token = tokenUtils.loginSign(currentUser, userByCode.getUserPwd());
                     return Result.ok("登录成功", token);
-                }
-                else {
+                } else {
                     return Result.ok("密码错误");
                 }
-            }else {
+            } else {
                 return Result.ok("用户没有审核");
             }
         }
-            return Result.ok("用户不存在");
+        return Result.ok("用户不存在");
 
+    }
+
+    @GetMapping("/curr-user")
+    public Result curruser(@RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
+        CurrentUser currentUser = tokenUtils.getCurrentUser(token);
+        return Result.ok(currentUser);
     }
 }
