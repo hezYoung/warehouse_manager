@@ -1,9 +1,11 @@
 package com.young.controller;
 
 import com.google.code.kaptcha.Producer;
+import com.young.pojo.Auth;
 import com.young.pojo.CurrentUser;
 import com.young.pojo.LoginUser;
 import com.young.pojo.User;
+import com.young.service.AuthService;
 import com.young.service.LoginService;
 import com.young.utils.DigestUtil;
 import com.young.utils.TokenUtils;
@@ -19,6 +21,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -31,6 +34,8 @@ public class LoginController {
     private LoginService loginService;
     @Autowired
     private TokenUtils tokenUtils;
+    @Autowired
+    private AuthService authService;
 
     @GetMapping("/captcha/captchaImage")
     public void captchaImage(HttpServletResponse response) throws IOException {
@@ -83,5 +88,13 @@ public class LoginController {
     public Result curruser(@RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
         CurrentUser currentUser = tokenUtils.getCurrentUser(token);
         return Result.ok(currentUser);
+    }
+
+    @GetMapping("/user/auth-list")
+    private Result alltree(@RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
+        CurrentUser currentUser = tokenUtils.getCurrentUser(token);
+        int userId = currentUser.getUserId();
+        List<Auth> auths = authService.findbyAuth(userId);
+        return Result.ok(auths);
     }
 }
