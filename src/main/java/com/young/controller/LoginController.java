@@ -6,7 +6,7 @@ import com.young.pojo.CurrentUser;
 import com.young.pojo.LoginUser;
 import com.young.pojo.User;
 import com.young.service.AuthService;
-import com.young.service.LoginService;
+import com.young.service.UserService;
 import com.young.utils.DigestUtil;
 import com.young.utils.TokenUtils;
 import com.young.vo.Result;
@@ -31,7 +31,7 @@ public class LoginController {
     @Autowired
     private StringRedisTemplate redisTemplate;
     @Autowired
-    private LoginService loginService;
+    private UserService loginService;
     @Autowired
     private TokenUtils tokenUtils;
     @Autowired
