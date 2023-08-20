@@ -1,9 +1,14 @@
 package com.young.service.impl;
 
+import com.young.dto.AssignRoleDto;
+import com.young.mapper.RoleMapper;
 import com.young.mapper.UserMapper;
+import com.young.mapper.UserRoleMapper;
 import com.young.page.Page;
 import com.young.pojo.User;
 import com.young.service.UserService;
+import com.young.utils.DigestUtil;
+import com.young.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +19,10 @@ public class UserServiceImpl implements UserService {
     //注入UserMapper
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private RoleMapper roleMapper;
+    @Autowired
+    private UserRoleMapper userRoleMapper;
     //根据用户名查找用户的业务方法
     @Override
     public User findUserByCode(String userCode) {
@@ -37,4 +46,47 @@ public class UserServiceImpl implements UserService {
         return page;
 
     }
+
+    @Override
+    public Result saveallUser(User user) {
+        User oldUser = userMapper.findbyuser(user.getUserCode());
+        if(oldUser!=null){//用户已存在
+            return Result.err(Result.CODE_ERR_BUSINESS, "该用户已存在！");
+        }
+
+        String userPwd  = DigestUtil.hmacSign(user.getUserPwd());
+        user.setUserPwd(userPwd );
+        userMapper.saveallUser(user);
+        return Result.ok("添加用户成功！");
+    }
+
+    @Override
+    public Result setStateto(User user) {
+        //根据用户id修改用户状态
+        int i = userMapper.updateUserState(user);
+        if(i>0){
+            return Result.ok("修改成功！");
+        }
+        return Result.err(Result.CODE_ERR_BUSINESS, "修改失败！");
+
+    }
+
+    @Override
+    public void assignRole(AssignRoleDto assignRoleDto) {
+        userRoleMapper.deleteRolebyid(assignRoleDto.getUserId());
+        List<String> roleCheckList = assignRoleDto.getRoleCheckList();
+        for (String roleName  : roleCheckList) {
+            //根据当前角色名查询当前角色的id
+            int idByName = userRoleMapper.getRoleIdByName(roleName);
+            userRoleMapper.insertUserRole(assignRoleDto.getUserId(),idByName);
+
+        }
+    }
+
+    @Override
+    public int setUserDelete(Integer userId) {
+        int userDelete = userMapper.setUserDelete(userId);
+        return userDelete;
+    }
+
 }
