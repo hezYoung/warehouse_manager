@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.young.mapper.RoleAuthMapper">
-  <resultMap id="BaseResultMap" type="com.young.pojo.RoleAuth">
-    <!--@mbg.generated-->
-    <!--@Table role_auth-->
-    <id column="role_auth_id" jdbcType="INTEGER" property="roleAuthId" />
-    <result column="role_id" jdbcType="INTEGER" property="roleId" />
-    <result column="auth_id" jdbcType="INTEGER" property="authId" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    role_auth_id, role_id, auth_id
-  </sql>
+
+  <delete id="removeRoleid">
+    delete from role where role_id=#{roleId}
+  </delete>
 </mapper>

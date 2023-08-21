@@ -30,7 +30,11 @@ public interface RoleMapper {
 
     //添加角色方法
     public int insertRole(Role role);
+    //根据角色id修改角色状态的方法
+    public int updateRoleState(Role role);
 
+    //删除用户
+    int deleteByRoleIdInt(Integer roleId);
 }
 
 

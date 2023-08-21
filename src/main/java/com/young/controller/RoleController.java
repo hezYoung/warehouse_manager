@@ -1,13 +1,16 @@
 package com.young.controller;
 
 import com.young.page.Page;
+import com.young.pojo.CurrentUser;
 import com.young.pojo.Role;
 import com.young.service.RoleService;
+import com.young.utils.TokenUtils;
 import com.young.vo.Result;
+import com.young.vo.WarehouseConstants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RequestMapping("/role")
@@ -17,12 +20,14 @@ public class RoleController {
     //注入RoleService
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private TokenUtils tokenUtils;
 
     /**
      * 查询所有角色的url接口role/role-list
      */
     @RequestMapping("/role-list")
-    public Result queryAllRole(){
+    public Result queryAllRole() {
         //执行业务
         List<Role> roleList = roleService.getAllRole();
         //响应
@@ -41,5 +46,54 @@ public class RoleController {
     public Result rolepage(Page page, Role role) {
         Page rolePage = roleService.queryRolePage(page, role);
         return Result.ok("查询成功", rolePage);
+    }
+
+    /**
+     * 添加角色的url接口/role/role-add
+     *
+     * @RequestBody Role role将添加的角色信息的json串数据封装到参数Role对象;
+     * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token
+     * 将请求头Token的值即客户端归还的token赋值给参数变量token;
+     */
+    @RequestMapping("/role-add")
+    public Result addRole(@RequestBody Role role,
+                          @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
+        //获取当前登录的用户
+        CurrentUser currentUser = tokenUtils.getCurrentUser(token);
+        //获取当前登录的用户id,即创建新角色的用户id
+        int createBy = currentUser.getUserId();
+        role.setCreateBy(createBy);
+
+        //执行业务
+        Result result = roleService.insertRole(role);
+        return result;
+    }
+
+    //修改角色状态
+    @RequestMapping("/role-state-update")
+    public Result updateRoleState(@RequestBody Role role,
+                                  @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
+
+//获取当前登录的用户
+        CurrentUser currentUser = tokenUtils.getCurrentUser(token);
+        //获取当前登录的用户id,即修改角色的用户id
+        int updateBy = currentUser.getUserId();
+
+        //设置修改角色的用户id和修改时间
+        role.setUpdateBy(updateBy);
+        role.setUpdateTime(new Date());
+
+        //执行业务
+        Result result = roleService.updateRoleState(role);
+
+        //响应
+        return result;
+    }
+
+    //删除
+    @RequestMapping("/role-delete/{roleId}")
+    public Result deleterole(@PathVariable Integer roleId) {
+        Result result = roleService.deleteRolebyId(roleId);
+        return result;
     }
 }

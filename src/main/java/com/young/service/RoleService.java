@@ -3,6 +3,7 @@ package com.young.service;
 import com.young.page.Page;
 import com.young.pojo.Role;
 import com.young.pojo.User;
+import com.young.vo.Result;
 
 import java.util.List;
 
@@ -19,4 +20,11 @@ public interface RoleService {
 
     //分页查询
     public Page queryRolePage(Page page, Role role);
+
+    //添加角色
+    public Result insertRole(Role role);
+
+    Result updateRoleState(Role role);
+
+    Result deleteRolebyId(Integer roleId);
 }

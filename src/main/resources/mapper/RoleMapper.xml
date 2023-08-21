@@ -57,13 +57,25 @@
 
     -->
     <select id="findRoleByNameOrCode" resultType="com.young.pojo.Role">
-
+        select * from role where role_name=#{param1} or role_code=#{param2}
     </select>
     <!--
     //添加角色方法
     public int insertRole(Role role);
     -->
     <insert id="insertRole">
-
+        insert into role (role_name, role_code, role_desc, role_state, create_by, create_time)
+        values
+        (#{roleName}, #{roleCode}, #{roleDesc}, 0, #{createBy}, now())
     </insert>
+
+    <update id="updateRoleState">
+        update role set
+        role_state = #{roleState}, update_by = #{updateBy}, update_time = #{updateTime}
+        where role_id = #{roleId}
+    </update>
+
+    <delete id="deleteByRoleIdInt">
+        delete from role where role_id=#{roleId}
+    </delete>
 </mapper>
