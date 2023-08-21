@@ -7,4 +7,7 @@ import java.util.List;
 public interface AuthMapper {
     List<Auth> findbyAuth(int userId);
 
+    List<Auth> findAuthTree();
+
+
 }

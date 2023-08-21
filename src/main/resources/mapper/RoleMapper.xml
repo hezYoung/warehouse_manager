@@ -78,4 +78,10 @@
     <delete id="deleteByRoleIdInt">
         delete from role where role_id=#{roleId}
     </delete>
+
+    <update id="updateDescById">
+        update role set
+        role_desc = #{roleDesc}, update_by = #{updateBy}, update_time = now()
+        where role_id=#{roleId}
+    </update>
 </mapper>

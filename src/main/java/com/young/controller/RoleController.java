@@ -1,5 +1,6 @@
 package com.young.controller;
 
+import com.young.dto.AssignAuthDto;
 import com.young.page.Page;
 import com.young.pojo.CurrentUser;
 import com.young.pojo.Role;
@@ -96,4 +97,38 @@ public class RoleController {
         Result result = roleService.deleteRolebyId(roleId);
         return result;
     }
+
+    /*自身已有的权限*/
+    @RequestMapping("/role-auth")
+    public Result queryRoleAuth(Integer roleId) {
+        //执行业务
+        List<Integer> authIdList = roleService.findallIds(roleId);
+        //响应
+        return Result.ok(authIdList);
+    }
+
+    /*添加权限的接口*/
+    @RequestMapping("/auth-grant")
+    public Result authgrant(@RequestBody AssignAuthDto assignAuthDto) {
+        roleService.insertAuth(assignAuthDto);
+        return Result.ok("权限分配成功");
+    }
+    /*角色完善*/
+    @RequestMapping("/role-update")
+    public Result updateRole(@RequestBody Role role,
+                             @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token){
+        //获取当前登录的用户
+        CurrentUser currentUser = tokenUtils.getCurrentUser(token);
+        //获取当前登录的用户id -- 修改角色的用户id
+        int updateBy = currentUser.getUserId();
+
+        role.setUpdateBy(updateBy);
+
+        //执行业务
+        Result result = roleService.updateRoleDesc(role);
+
+        //响应
+        return result;
+    }
+
 }

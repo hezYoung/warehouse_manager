@@ -1,5 +1,6 @@
 package com.young.service;
 
+import com.young.dto.AssignAuthDto;
 import com.young.page.Page;
 import com.young.pojo.Role;
 import com.young.pojo.User;
@@ -27,4 +28,12 @@ public interface RoleService {
     Result updateRoleState(Role role);
 
     Result deleteRolebyId(Integer roleId);
+
+    List<Integer> findallIds(Integer roleId);
+
+    void insertAuth(AssignAuthDto assignAuthDto);
+
+    //修改角色描述的业务方法
+    public Result updateRoleDesc(Role role);
+
 }

@@ -1,5 +1,6 @@
 package com.young.service.impl;
 
+import com.young.dto.AssignAuthDto;
 import com.young.mapper.RoleAuthMapper;
 import com.young.page.Page;
 import com.young.pojo.Role;
@@ -77,6 +78,37 @@ public class RoleServiceImpl implements RoleService{
         }
         return Result.err(Result.CODE_ERR_BUSINESS, "角色删除失败");
     }
+
+    @Override
+    public List<Integer> findallIds(Integer roleId) {
+        List<Integer> findallIds = roleAuthMapper.findallIds(roleId);
+        return findallIds;
+    }
+
+    @Override
+    public void insertAuth(AssignAuthDto assignAuthDto) {
+        //拿到角色id
+        Integer roleId = assignAuthDto.getRoleId();
+        roleAuthMapper.delAuthByRoleId(roleId);
+        List<Integer> authIds = assignAuthDto.getAuthIds();
+        for (Integer authId : authIds) {
+            roleAuthMapper.insertAuth(roleId, authId);
+        }
+
+
+    }
+
+    @Override
+    public Result updateRoleDesc(Role role) {
+        int i = roleMapper.updateDescById(role);
+        if(i>0){
+            return Result.ok("角色修改成功！");
+        }
+        return Result.err(Result.CODE_ERR_BUSINESS, "角色修改失败！");
+
+    }
+
+
 }
 
 
