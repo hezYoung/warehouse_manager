@@ -10,6 +10,14 @@
     <update id="setUserDelete">
         update user_info set is_delete = 1 where user_id = #{userId}
     </update>
+    <update id="updateNameById">
+        update user_info set user_name = #{userName}, update_by = #{updateBy}, update_time = now()
+        where user_id = #{userId}
+    </update>
+    <!--重置密码-->
+    <update id="updatePwdById">
+        update user_info set user_pwd = #{userPwd} where user_id = #{userId}
+    </update>
 
     <select id="findbyuser" resultType="user">
         select * from user_info WHERE user_code = #{userCode} and is_delete = 0

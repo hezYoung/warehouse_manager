@@ -1,6 +1,8 @@
 package com.young.service;
 
+import com.young.page.Page;
 import com.young.pojo.Role;
+import com.young.pojo.User;
 
 import java.util.List;
 
@@ -15,4 +17,6 @@ public interface RoleService {
     //查询用户已分配的角色的业务方法
     public List<Role> queryRolesByUserId(Integer userId);
 
+    //分页查询
+    public Page queryRolePage(Page page, Role role);
 }

@@ -116,5 +116,25 @@ public class UserController {
         return Result.ok();
     }
 
+    //修改用户
+    @RequestMapping("/updateUser")
+    public Result updateUser(@RequestBody User user, @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
+        CurrentUser currentUser = tokenUtils.getCurrentUser(token);
+        int userId = currentUser.getUserId();
+        user.setUpdateBy(userId);
+
+        Result result = loginService.updateNameById(user);
+        return result;
+
+    }
+
+    //重置密码
+    @RequestMapping("/updatePwd/{userId}")
+    public Result updatePwd(@PathVariable Integer userId) {
+        Result result = loginService.setPwdById(userId);
+
+        return result;
+    }
+
 
 }

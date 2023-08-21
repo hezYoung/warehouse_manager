@@ -1,7 +1,9 @@
 package com.young.mapper;
 
 
+import com.young.page.Page;
 import com.young.pojo.Role;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,6 +20,16 @@ public interface RoleMapper {
     //根据用户id查询用户已分配的角色
     public List<Role> findRolesByUserId(Integer userId);
 
+    //查询条数
+    public int findCount(Role role);
+
+    //分页查询
+    public List<Role> findallRolePage(@Param("page") Page page, @Param("role") Role role);
+    //查询是否有这个角色
+    public Role findRoleByNameOrCode(String roleName, String roleCode);
+
+    //添加角色方法
+    public int insertRole(Role role);
 
 }
 

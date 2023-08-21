@@ -20,4 +20,8 @@ public interface UserMapper {
     public int updateUserState(User user);
 
     int setUserDelete(Integer userId);
+//修改用户
+    int updateNameById(User user);
+
+    int updatePwdById(@Param("userId") Integer userId,@Param("userPwd") String password);
 }

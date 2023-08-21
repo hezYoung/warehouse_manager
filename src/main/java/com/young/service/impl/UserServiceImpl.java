@@ -9,6 +9,7 @@ import com.young.pojo.User;
 import com.young.service.UserService;
 import com.young.utils.DigestUtil;
 import com.young.vo.Result;
+import com.young.vo.WarehouseConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -88,5 +89,25 @@ public class UserServiceImpl implements UserService {
         int userDelete = userMapper.setUserDelete(userId);
         return userDelete;
     }
+
+    @Override
+    public Result updateNameById(User user) {
+        int i = userMapper.updateNameById(user);
+        if (i > 0) {
+            return Result.ok("用户修改成功");
+        }
+        return Result.err(500,"用户修改失败");
+    }
+
+    @Override
+    public Result setPwdById(Integer userId) {
+        String s = DigestUtil.hmacSign("123456");
+        int i = userMapper.updatePwdById(userId, s);
+        if (i > 0) {
+            return Result.ok("重置成功");
+        }
+        return Result.err(Result.CODE_ERR_BUSINESS,"重置失败");
+    }
+
 
 }

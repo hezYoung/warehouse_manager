@@ -18,4 +18,9 @@ public interface UserService {
     void assignRole(AssignRoleDto assignRoleDto);
 
     int setUserDelete(Integer userId);
+
+    Result updateNameById(User user);
+
+    //修改密码
+    Result setPwdById(Integer userId);
 }

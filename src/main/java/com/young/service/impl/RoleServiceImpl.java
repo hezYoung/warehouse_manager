@@ -1,6 +1,8 @@
 package com.young.service.impl;
 
+import com.young.page.Page;
 import com.young.pojo.Role;
+import com.young.pojo.User;
 import com.young.service.RoleService;
 import com.young.mapper.RoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,16 @@ public class RoleServiceImpl implements RoleService{
     @Override
     public List<Role> queryRolesByUserId(Integer userId) {
         return roleMapper.findRolesByUserId(userId);
+    }
+
+    @Override
+    public Page queryRolePage(Page page, Role role) {
+        int roleCount  = roleMapper.findCount(role);
+        List<Role> roleList  = roleMapper.findallRolePage(page, role);
+        page.setTotalNum(roleCount);
+        page.setResultList(roleList );
+
+        return page;
     }
 }
 
