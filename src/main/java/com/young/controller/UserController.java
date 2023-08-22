@@ -102,19 +102,6 @@ public class UserController {
         return Result.ok("删除成功");
     }
 
-    /**
-     * 登出的url接口/logout
-     *
-     * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String clientToken
-     * 将请求头Token的值即前端归还的token,赋值给请求处理方法的参数String clientToken
-     */
-    @DeleteMapping("/logout")
-    public Result logout(@RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME)
-                         String clientToken) {
-        //从redis移除token
-        stringRedisTemplate.delete(clientToken);
-        return Result.ok();
-    }
 
     //修改用户
     @RequestMapping("/updateUser")

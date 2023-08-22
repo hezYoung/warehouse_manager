@@ -97,4 +97,17 @@ public class LoginController {
         List<Auth> auths = authService.findbyAuth(userId);
         return Result.ok(auths);
     }
+    /**
+     * 登出的url接口/logout
+     *
+     * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String clientToken
+     * 将请求头Token的值即前端归还的token,赋值给请求处理方法的参数String clientToken
+     */
+    @DeleteMapping("/logout")
+    public Result logout(@RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME)
+                         String clientToken) {
+        //从redis移除token
+        redisTemplate.delete(clientToken);
+        return Result.ok();
+    }
 }

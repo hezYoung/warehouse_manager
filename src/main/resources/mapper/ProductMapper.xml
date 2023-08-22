@@ -97,4 +97,29 @@
     null, #{createBy}, null, #{imgs}, #{productDate}, #{suppDate}
     )
   </insert>
+
+  <update id="updateStateById">
+    update product set up_down_state = #{upDownState}
+    where product_id = #{productId}
+  </update>
+
+  <delete id="deleteProductByIds">
+    delete from product where product_id in
+    <foreach collection="list" open="(" close=")" separator="," item="productId">
+      #{productId}
+    </foreach>
+  </delete>
+
+  <update id="updateProductById">
+    <!--商品上下架状态、创建时间、创建者字段值不用改-->
+    update product set store_id = #{storeId}, brand_id = #{brandId},
+    product_name = #{productName}, product_num = #{productNum},
+    product_invent = #{productInvent}, type_id = #{typeId},
+    supply_id = #{supplyId}, place_id = #{placeId}, unit_id = #{unitId},
+    introduce = #{introduce}, in_price = #{inPrice}, sale_price = #{salePrice},
+    mem_price = #{memPrice}, update_time = now(), update_by = #{updateBy},
+    imgs = #{imgs}, product_date = #{productDate}, supp_date = #{suppDate}
+    where product_id = #{productId}
+
+  </update>
 </mapper>

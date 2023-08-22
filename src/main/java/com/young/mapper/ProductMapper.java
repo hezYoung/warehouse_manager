@@ -15,5 +15,11 @@ public interface ProductMapper {
                                            @Param("product") Product product);
     //添加商品的方法
     public int insertProduct(Product product);
+    //根据商品id修改商品的上下架状态
+    public int updateStateById(Product product);
+    //根据商品id删除商品的方法
+    public int deleteProductByIds(List<Integer>  productId);
+    //根据商品id修改商品的方法
+    public int updateProductById(Product product);
 
 }

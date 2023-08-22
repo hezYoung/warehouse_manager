@@ -3,17 +3,18 @@ package com.young.controller;
 import com.young.page.Page;
 import com.young.pojo.*;
 import com.young.service.*;
+import com.young.utils.TokenUtils;
 import com.young.vo.Result;
+import com.young.vo.WarehouseConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ResourceUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.List;
 
 @RequestMapping("/product")
@@ -38,7 +39,8 @@ public class ProductController {
     //注入UnitService
     @Autowired
     private UnitService unitService;
-
+    @Autowired
+    private TokenUtils tokenUtils;
 
     /**
      * 查询所有仓库的url接口/product/store-list
@@ -138,14 +140,85 @@ public class ProductController {
      */
     @CrossOrigin
     @PostMapping("/img-upload")
-    public Result uploadimg(MultipartFile multipartFile) throws Exception{
-        File file = ResourceUtils.getFile(uploadPath);
-        //获取绝对路径
-        File absoluteFile = file.getAbsoluteFile();
-        //拼接路径
-        String imgPath = absoluteFile + "\\" + multipartFile.getOriginalFilename();
-        multipartFile.transferTo(new File(imgPath));
-        return Result.ok("图片上传成功");
+    public Result uploadimg(MultipartFile file){
+        try {
+            //拿到图片上传到的目录(类路径classes下的static/img/upload)的File对象
+            File uploadDirFile = ResourceUtils.getFile(uploadPath);
+            //拿到图片上传到的目录的磁盘路径
+            String uploadDirPath = uploadDirFile.getAbsolutePath();
+            //拿到图片保存到的磁盘路径
+            String fileUploadPath = uploadDirPath + "\\" + file.getOriginalFilename();
+            //保存图片
+            file.transferTo(new File(fileUploadPath));
+            //成功响应
+            return Result.ok("图片上传成功！");
+        } catch (Exception e) {
+            //失败响应
+            return Result.err(Result.CODE_ERR_BUSINESS, "图片上传失败！");
+        }
+
     }
+    @RequestMapping("/product-add")
+    public Result addProduct(@RequestBody Product product,
+                             @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token){
+
+        //获取当前登录的用户
+        CurrentUser currentUser = tokenUtils.getCurrentUser(token);
+        //获取当前登录的用户id,即添加商品的用户id
+        int createBy = currentUser.getUserId();
+        product.setCreateBy(createBy);
+
+        //执行业务
+        Result result = productService.saveProduct(product);
+
+        //响应
+        return result;
+    }
+    /**
+     * 修改商品上下架状态的url接口/product/state-change
+     *
+     * @RequestBody Product product用于接收并封装请求json数据;
+     */
+    @RequestMapping("/state-change")
+    public Result changeProductState(@RequestBody Product product){
+        //执行业务
+        Result result = productService.updateProductState(product);
+        //响应
+        return result;
+    }
+//删除接口
+@RequestMapping("/product-delete/{productId}")
+public Result deleteProduct(@PathVariable Integer productId){
+    //执行业务
+    Result result = productService.delGoodsbyId(Arrays.asList(productId));
+    //响应
+    return result;
+}
+//批量删除
+@RequestMapping("/product-list-delete")
+public Result deleteProductIds(@RequestBody List<Integer> productId){
+    //执行业务
+    Result result = productService.delGoodsbyId(productId);
+    //响应
+    return result;
+}
+//修改
+@RequestMapping("/product-update")
+public Result updateProduct(@RequestBody Product product,
+                            @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token){
+
+    //获取当前登录的用户
+    CurrentUser currentUser = tokenUtils.getCurrentUser(token);
+    //获取当前登录的用户id,即修改商品的用户id
+    int updateBy = currentUser.getUserId();
+    product.setUpdateBy(updateBy);
+
+    //执行业务
+    Result result = productService.updateProduct(product);
+
+    //响应
+    return result;
+}
+
 
 }
