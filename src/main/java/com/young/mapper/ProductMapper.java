@@ -13,5 +13,7 @@ public interface ProductMapper {
     //分页查询商品的方法
     public List<Product> selectProductPage(@Param("page") Page page,
                                            @Param("product") Product product);
+    //添加商品的方法
+    public int insertProduct(Product product);
 
 }

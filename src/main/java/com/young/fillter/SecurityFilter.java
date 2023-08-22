@@ -37,6 +37,8 @@ public class SecurityFilter implements Filter {
         ArrayList<Object> list = new ArrayList<>();
         list.add("/captcha/captchaImage");
         list.add("/login");
+        list.add("/logout");
+        list.add("/product/img-upload");
         if (list.contains(path) || path.contains("/img/upload")) {
             filterChain.doFilter(request, response);
             return;
