@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.young.mapper.StoreMapper">
+  <resultMap id="BaseResultMap" type="com.young.pojo.Store">
+    <!--@mbg.generated-->
+    <!--@Table store-->
+    <id column="store_id" jdbcType="INTEGER" property="storeId" />
+    <result column="store_name" jdbcType="VARCHAR" property="storeName" />
+    <result column="store_num" jdbcType="VARCHAR" property="storeNum" />
+    <result column="store_address" jdbcType="VARCHAR" property="storeAddress" />
+    <result column="concat" jdbcType="VARCHAR" property="concat" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    store_id, store_name, store_num, store_address, `concat`, phone
+  </sql>
+</mapper>
