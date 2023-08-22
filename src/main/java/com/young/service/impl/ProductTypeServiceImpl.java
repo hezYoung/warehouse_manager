@@ -11,7 +11,7 @@ import com.young.service.ProductTypeService;
 import java.util.ArrayList;
 import java.util.List;
 //指定缓存的名称即键的前缀,一般是@CacheConfig标注的类的全类名
-@CacheConfig(cacheNames = "com.pn.service.impl.productTypeServiceImpl")
+@CacheConfig(cacheNames = "com.young.service.impl.productTypeServiceImpl")
 
 @Service
 public class ProductTypeServiceImpl implements ProductTypeService{

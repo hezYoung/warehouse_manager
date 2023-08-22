@@ -10,7 +10,7 @@ import com.young.service.BrandService;
 
 import java.util.List;
 //指定缓存的名称即键的前缀,一般是@CacheConfig标注的类的全类名
-@CacheConfig(cacheNames = "com.pn.service.impl.BrandServiceImpl")
+@CacheConfig(cacheNames = "com.young.service.impl.BrandServiceImpl")
 @Service
 public class BrandServiceImpl implements BrandService{
 

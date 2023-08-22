@@ -1,14 +1,8 @@
 package com.young.controller;
 
 import com.young.page.Page;
-import com.young.pojo.Brand;
-import com.young.pojo.Product;
-import com.young.pojo.ProductType;
-import com.young.pojo.Store;
-import com.young.service.BrandService;
-import com.young.service.ProductService;
-import com.young.service.ProductTypeService;
-import com.young.service.StoreService;
+import com.young.pojo.*;
+import com.young.service.*;
 import com.young.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +23,14 @@ public class ProductController {
     //注入ProductTypeService
     @Autowired
     private ProductTypeService productTypeService;
+    //注入SupplyService
+    @Autowired
+    private SupplyService supplyService;
+    //注入PlaceService
+    @Autowired
+    private PlaceService placeService;
+
+
     /**
      * 查询所有仓库的url接口/product/store-list
      * <p>
@@ -73,6 +75,31 @@ public class ProductController {
         List<ProductType> typeTreeList = productTypeService.allProductTypeTree();
         //响应
         return Result.ok(typeTreeList);
+    }
+    /**
+     * 查询所有供应商的url接口/product/supply-list
+     *
+     * 返回值Result对象给客户端响应查询到的List<Supply>;
+     */
+    @RequestMapping("/supply-list")
+    public Result supplyList(){
+        //执行业务
+        List<Supply> supplyList = supplyService.queryAllSupply();
+        //响应
+        return Result.ok(supplyList);
+    }
+
+    /**
+     * 查询所有产地的url接口/product/place-list
+     *
+     * 返回值Result对象给客户端响应查询到的List<Place>;
+     */
+    @RequestMapping("/place-list")
+    public Result placeList(){
+        //执行业务
+        List<Place> placeList = placeService.queryAllPlace();
+        //响应
+        return Result.ok(placeList);
     }
 
 }

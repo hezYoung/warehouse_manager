@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 //指定缓存的名称即键的前缀,一般是@CacheConfig标注的类的全类名
-@CacheConfig(cacheNames = "com.pn.service.impl.StoreServiceImpl")
+@CacheConfig(cacheNames = "com.young.service.impl.StoreServiceImpl")
 public class StoreServiceImpl implements StoreService{
 
     @Resource
