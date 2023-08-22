@@ -3,9 +3,11 @@ package com.young.controller;
 import com.young.page.Page;
 import com.young.pojo.Brand;
 import com.young.pojo.Product;
+import com.young.pojo.ProductType;
 import com.young.pojo.Store;
 import com.young.service.BrandService;
 import com.young.service.ProductService;
+import com.young.service.ProductTypeService;
 import com.young.service.StoreService;
 import com.young.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,9 @@ public class ProductController {
     private BrandService brandService;
     @Autowired
     private ProductService productService;
-
+    //注入ProductTypeService
+    @Autowired
+    private ProductTypeService productTypeService;
     /**
      * 查询所有仓库的url接口/product/store-list
      * <p>
@@ -56,4 +60,19 @@ public class ProductController {
         Page productPage = productService.queryProductPage(page, product);
         return Result.ok(productPage);
     }
+
+
+    /**
+     * 查询所有商品分类树的url接口/product/category-tree
+     *
+     * 返回值Result对象给客户端响应查询到的所有商品分类树List<ProductType>;
+     */
+    @RequestMapping("/category-tree")
+    public Result categoryTree(){
+        //执行业务
+        List<ProductType> typeTreeList = productTypeService.allProductTypeTree();
+        //响应
+        return Result.ok(typeTreeList);
+    }
+
 }

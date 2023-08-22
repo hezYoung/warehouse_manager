@@ -1,6 +1,8 @@
 package com.young.pojo;
 
 import java.io.Serializable;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,5 +24,7 @@ public class ProductType implements Serializable {
 
     private String typeDesc;
 
-    private static final long serialVersionUID = 1L;
+    //自定义List<ProductType>集合属性,用于存储当前分类的所有子级分类
+    private List<ProductType> childProductCategory;
+
 }
