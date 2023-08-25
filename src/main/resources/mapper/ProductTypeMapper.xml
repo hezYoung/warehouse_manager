@@ -6,6 +6,9 @@
     null, #{parentId}, #{typeCode}, #{typeName}, #{typeDesc}
     )
   </insert>
+  <delete id="deleteProductType">
+    delete from product_type where type_id = #{typeId} or parent_id = #{typeId}
+  </delete>
 
   <!--
        //查询所有商品分类的方法

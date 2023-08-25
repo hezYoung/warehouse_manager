@@ -11,6 +11,8 @@ public interface ProductTypeMapper {
     public ProductType findTypeByCode(String typeCode);
     //添加商品分类的方法
     public int insertProductType(ProductType productType);
+    //根据分类id删除分类及其所有子级分类的方法
+    public int deleteProductType(Integer typeId);
 
 
 }

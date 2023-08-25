@@ -56,6 +56,18 @@ public class ProductTypeServiceImpl implements ProductTypeService{
 
     }
 
+    @Override
+    public Result removeProductType(Integer typeId) {
+        //根据分类id删除分类及其所有子级分类
+        int i = productTypeMapper.deleteProductType(typeId);
+        if(i>0){
+            return Result.ok("分类删除成功！");
+        }
+        return Result.err(Result.CODE_ERR_BUSINESS, "分类删除失败！");
+    }
+
+
+
     private List<ProductType> allTypeToTypeTree(List<ProductType> allTypeList, Integer parentId){
 
         List<ProductType> typeList = new ArrayList<>();

@@ -4,6 +4,7 @@ import com.young.pojo.ProductType;
 import com.young.service.ProductTypeService;
 import com.young.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,6 +50,18 @@ public class ProductTypeController {
     public Result addProductType(@RequestBody ProductType productType){
         //执行业务
         Result result = productTypeService.saveProductType(productType);
+        //响应
+        return result;
+    }
+    /**
+     * 删除商品分类的url接口/productCategory/type-delete/{typeId}
+     *
+     * @PathVariable Integer typeId将路径占位符typeId的值赋值给参数变量typeId;
+     */
+    @RequestMapping("/type-delete/{typeId}")
+    public Result deleteType(@PathVariable Integer typeId){
+        //执行业务
+        Result result = productTypeService.removeProductType(typeId);
         //响应
         return result;
     }
