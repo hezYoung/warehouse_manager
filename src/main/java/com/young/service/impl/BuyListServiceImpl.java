@@ -54,4 +54,15 @@ public class BuyListServiceImpl implements BuyListService{
 
     }
 
+    @Override
+    public Result updatePurchase(BuyList buyList) {
+        //根据id修改采购单
+        int i = buyListMapper.updatePurchaseById(buyList);
+        if(i>0){
+            return Result.ok("采购单修改成功！");
+        }
+        return Result.err(Result.CODE_ERR_BUSINESS, "采购单修改失败！");
+    }
 }
+
+

@@ -62,5 +62,12 @@ public class BuyListController {
         //响应
         return result;
     }
+    @RequestMapping("/purchase-update")
+    public Result updatePurchase(@RequestBody BuyList buyList){
+        //执行业务
+        Result result = buyListService.updatePurchase(buyList);
+        //响应
+        return result;
+    }
 
 }

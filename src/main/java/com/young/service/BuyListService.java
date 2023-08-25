@@ -11,5 +11,7 @@ public interface BuyListService{
     public Page queryPurchasePage(Page page, BuyList buyList);
     //删除采购单的业务方法
     public Result deletePurchase(Integer buyId);
+    //修改采购单的业务方法
+    public Result updatePurchase(BuyList buyList);
 
 }

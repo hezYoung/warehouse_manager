@@ -17,5 +17,7 @@ public interface BuyListMapper {
                                             @Param("purchase") BuyList buyList);
     //根据id删除采购单的方法
     public int deletePurchaseById(Integer buyId);
+    //根据id修改采购单的方法
+    public int updatePurchaseById(BuyList buyList);
 
 }

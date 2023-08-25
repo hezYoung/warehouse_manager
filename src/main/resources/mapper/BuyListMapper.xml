@@ -8,6 +8,11 @@
     #{supplyId}, #{placeId}, #{buyUser}, #{phone}, 0
     )
   </insert>
+  <update id="updatePurchaseById">
+    update buy_list set
+    buy_num = #{buyNum}, fact_buy_num = #{factBuyNum}
+    where buy_id = #{buyId}
+  </update>
   <delete id="deletePurchaseById">
     delete from buy_list where buy_id = #{buyId}
   </delete>
