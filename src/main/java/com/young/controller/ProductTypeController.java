@@ -29,5 +29,15 @@ public class ProductTypeController {
         //响应
         return Result.ok(productTypeList);
     }
+    /**
+     * 校验分类编码是否已存在的url接口/productCategory/verify-type-code
+     */
+    @RequestMapping("/verify-type-code")
+    public Result checkTypeCode(String typeCode){
+        //执行业务
+        Result result = productTypeService.queryTypeByCode(typeCode);
+        //响应
+        return result;
+    }
 
 }

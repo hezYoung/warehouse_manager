@@ -7,5 +7,10 @@ import java.util.List;
 public interface ProductTypeMapper {
     //查询所有商品分类的方法
     public List<ProductType> findAllProductType();
+    //根据分类编码查询商品分类的方法
+    public ProductType findTypeByCode(String typeCode);
+    //添加商品分类的方法
+    public int insertProductType(ProductType productType);
+
 
 }

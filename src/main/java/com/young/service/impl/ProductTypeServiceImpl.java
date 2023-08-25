@@ -1,6 +1,7 @@
 package com.young.service.impl;
 
 import com.young.pojo.ProductType;
+import com.young.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -32,6 +33,15 @@ public class ProductTypeServiceImpl implements ProductTypeService{
         List<ProductType> typeTreeList = allTypeToTypeTree(allTypeList, 0);
         //返回商品分类树List<ProductType>
         return typeTreeList;
+
+    }
+//查看商品id是否存在，前端用的焦点触发事件
+    @Override
+    public Result queryTypeByCode(String typeCode) {
+        //根据分类编码查询商品分类
+        ProductType productType = productTypeMapper.findTypeByCode(typeCode);
+
+        return Result.ok(productType==null);
 
     }
 
