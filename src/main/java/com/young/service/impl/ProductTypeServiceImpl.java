@@ -66,6 +66,16 @@ public class ProductTypeServiceImpl implements ProductTypeService{
         return Result.err(Result.CODE_ERR_BUSINESS, "分类删除失败！");
     }
 
+    @Override
+    public Result updateProductType(ProductType productType) {
+        //根据分类id修改分类
+        int i = productTypeMapper.updateTypeById(productType);
+        if(i>0){
+            return Result.ok("分类修改成功！");
+        }
+        return Result.err(Result.CODE_ERR_BUSINESS, "分类修改失败！");
+
+}
 
 
     private List<ProductType> allTypeToTypeTree(List<ProductType> allTypeList, Integer parentId){

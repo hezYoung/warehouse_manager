@@ -13,6 +13,8 @@ public interface ProductTypeMapper {
     public int insertProductType(ProductType productType);
     //根据分类id删除分类及其所有子级分类的方法
     public int deleteProductType(Integer typeId);
+    //根据分类id修改分类的方法
+    public int updateTypeById(ProductType productType);
 
 
 }

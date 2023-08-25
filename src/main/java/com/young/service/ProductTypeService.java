@@ -16,5 +16,7 @@ public interface ProductTypeService{
     public Result saveProductType(ProductType productType);
     //删除商品分类的业务方法
     public Result removeProductType(Integer typeId);
+    //修改商品分类的业务方法
+    public Result updateProductType(ProductType productType);
 
 }

@@ -6,6 +6,11 @@
     null, #{parentId}, #{typeCode}, #{typeName}, #{typeDesc}
     )
   </insert>
+  <update id="updateTypeById">
+    update product_type set
+    type_name = #{typeName}, type_desc = #{typeDesc}
+    where type_id = #{typeId}
+  </update>
   <delete id="deleteProductType">
     delete from product_type where type_id = #{typeId} or parent_id = #{typeId}
   </delete>

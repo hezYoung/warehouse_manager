@@ -65,5 +65,17 @@ public class ProductTypeController {
         //响应
         return result;
     }
+    /**
+     * 修改商品分类的url接口/productCategory/type-update
+     *
+     * @RequestBody ProductType productType将请求传递的json数据封装到参数ProductType对象;
+     */
+    @RequestMapping("/type-update")
+    public Result updateType(@RequestBody ProductType productType){
+        //执行业务
+        Result result = productTypeService.updateProductType(productType);
+        //响应
+        return result;
+    }
 
 }
