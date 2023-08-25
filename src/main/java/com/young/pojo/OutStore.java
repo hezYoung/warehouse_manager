@@ -37,5 +37,16 @@ public class OutStore implements Serializable {
     */
     private String isOut;
 
-    private static final long serialVersionUID = 1L;
+    //------------------追加的属性-------------------------
+
+    private String productName;//商品名称
+
+    private String startTime;//起始时间
+
+    private String endTime;//结束时间
+
+    private String storeName;//仓库名称
+
+    private String userCode;//创建出库单的用户的名称
+
 }
