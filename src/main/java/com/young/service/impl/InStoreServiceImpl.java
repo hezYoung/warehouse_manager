@@ -1,6 +1,7 @@
 package com.young.service.impl;
 
 import com.young.mapper.BuyListMapper;
+import com.young.page.Page;
 import com.young.pojo.InStore;
 import com.young.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import javax.annotation.Resource;
 import com.young.mapper.InStoreMapper;
 import com.young.service.InStoreService;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class InStoreServiceImpl implements InStoreService{
@@ -32,6 +35,22 @@ public class InStoreServiceImpl implements InStoreService{
             return Result.err(Result.CODE_ERR_BUSINESS, "入库单添加失败！");
         }
         return Result.err(Result.CODE_ERR_BUSINESS, "入库单添加失败！");
+    }
+
+    @Override
+    public Page queryInStorePage(Page page, InStore inStore) {
+        //查询入库单总行数
+        int inStoreCount = inStoreMapper.selectInStoreCount(inStore);
+
+        //分页查询入库单
+        List<InStore> inStoreList = inStoreMapper.selectInStorePage(page, inStore);
+
+        //将查询到的总行数和当前页数据封装到Page对象
+        page.setTotalNum(inStoreCount);
+        page.setResultList(inStoreList);
+
+        return page;
+
     }
 
 }
