@@ -12,5 +12,7 @@ public interface ProductTypeService{
     //校验分类编码是否已存在的业务方法
     public Result queryTypeByCode(String typeCode);
 
+    //添加商品分类的业务方法
+    public Result saveProductType(ProductType productType);
 
 }

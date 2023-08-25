@@ -45,6 +45,17 @@ public class ProductTypeServiceImpl implements ProductTypeService{
 
     }
 
+    @Override
+    public Result saveProductType(ProductType productType) {
+        //添加商品分类
+        int i = productTypeMapper.insertProductType(productType);
+        if(i>0){
+            return Result.ok("分类添加成功！");
+        }
+        return Result.err(Result.CODE_ERR_BUSINESS, "分类添加失败！");
+
+    }
+
     private List<ProductType> allTypeToTypeTree(List<ProductType> allTypeList, Integer parentId){
 
         List<ProductType> typeList = new ArrayList<>();

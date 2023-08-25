@@ -4,6 +4,7 @@ import com.young.pojo.ProductType;
 import com.young.service.ProductTypeService;
 import com.young.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,6 +37,18 @@ public class ProductTypeController {
     public Result checkTypeCode(String typeCode){
         //执行业务
         Result result = productTypeService.queryTypeByCode(typeCode);
+        //响应
+        return result;
+    }
+    /**
+     * 添加商品分类的url接口/productCategory/type-add
+     *
+     * @RequestBody ProductType productType将请求传递的json数据封装到参数ProductType对象;
+     */
+    @RequestMapping("/type-add")
+    public Result addProductType(@RequestBody ProductType productType){
+        //执行业务
+        Result result = productTypeService.saveProductType(productType);
         //响应
         return result;
     }
