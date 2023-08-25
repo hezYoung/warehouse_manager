@@ -13,6 +13,15 @@
     buy_num = #{buyNum}, fact_buy_num = #{factBuyNum}
     where buy_id = #{buyId}
   </update>
+
+  <!--
+    //根据id将采购单状态改为已入库的方法
+    public int updateIsInById(Integer buyId)
+  -->
+  <update id="updateIsInById">
+    update buy_list set is_in = 1 where buy_id = #{buyId}
+  </update>
+
   <delete id="deletePurchaseById">
     delete from buy_list where buy_id = #{buyId}
   </delete>

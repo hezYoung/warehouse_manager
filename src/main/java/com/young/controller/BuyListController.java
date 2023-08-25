@@ -2,15 +2,17 @@ package com.young.controller;
 
 import com.young.page.Page;
 import com.young.pojo.BuyList;
+import com.young.pojo.CurrentUser;
+import com.young.pojo.InStore;
 import com.young.pojo.Store;
 import com.young.service.BuyListService;
+import com.young.service.InStoreService;
 import com.young.service.StoreService;
+import com.young.utils.TokenUtils;
 import com.young.vo.Result;
+import com.young.vo.WarehouseConstants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,6 +21,13 @@ import java.util.List;
 public class BuyListController {
     @Autowired
     private BuyListService buyListService;
+    //注入TokenUtils
+    @Autowired
+    private TokenUtils tokenUtils;
+    //注入InStoreService
+    @Autowired
+    private InStoreService inStoreService;
+
     /**
      * 添加采购单的url接口/purchase/purchase-add
      */
@@ -66,6 +75,27 @@ public class BuyListController {
     public Result updatePurchase(@RequestBody BuyList buyList){
         //执行业务
         Result result = buyListService.updatePurchase(buyList);
+        //响应
+        return result;
+    }
+    @RequestMapping("/in-warehouse-record-add")
+    public Result addInStore(@RequestBody BuyList buyList,
+                             @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token){
+        //获取当前登录的用户
+        CurrentUser currentUser = tokenUtils.getCurrentUser(token);
+        //获取当前登录的用户id -- 创建入库单的用户id
+        int createBy = currentUser.getUserId();
+
+        //创建InStore对象封装添加的入库单的信息
+        InStore inStore = new InStore();
+        inStore.setStoreId(buyList.getStoreId());
+        inStore.setProductId(buyList.getProductId());
+        inStore.setInNum(buyList.getFactBuyNum());
+        inStore.setCreateBy(createBy);
+
+        //执行业务
+        Result result = inStoreService.saveInStore(inStore, buyList.getBuyId());
+
         //响应
         return result;
     }

@@ -19,5 +19,7 @@ public interface BuyListMapper {
     public int deletePurchaseById(Integer buyId);
     //根据id修改采购单的方法
     public int updatePurchaseById(BuyList buyList);
+    //根据id将采购单状态改为已入库的方法
+    public int updateIsInById(Integer buyId);
 
 }
