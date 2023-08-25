@@ -15,5 +15,7 @@ public interface OutStoreMapper {
     //分页查询出库单的方法
     public List<OutStore> outStorePage(@Param("page") Page page,
                                        @Param("outStore") OutStore outStore);
+    //根据id将出库单状态改为已出库的方法
+    public int updateIsOutById(Integer outsId);
 
 }

@@ -2,6 +2,7 @@ package com.young.mapper;
 
 import com.young.page.Page;
 import com.young.pojo.Product;
+import com.young.vo.Statistics;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -23,5 +24,9 @@ public interface ProductMapper {
     public int updateProductById(Product product);
     //根据商品id增加商品库存的方法
     public int addInventById(Integer productId, Integer invent);
+    //根据商品id查询商品的方法
+    public Product selectProductById(Integer productId);
+    //统计各个仓库商品库存数量的方法
+    public List<Statistics> statisticsStoreInvent();
 
 }

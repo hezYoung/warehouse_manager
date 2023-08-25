@@ -72,5 +72,12 @@ public class OutStoreController {
         //响应
         return Result.ok(page);
     }
+    @RequestMapping("/outstore-confirm")
+    public Result confirmOutStore(@RequestBody OutStore outStore){
+        //执行业务
+        Result result = outStoreService.confirmOutStore(outStore);
+        //响应
+        return result;
+    }
 
 }

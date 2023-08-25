@@ -3,6 +3,7 @@ package com.young.service.impl;
 import com.young.page.Page;
 import com.young.pojo.Product;
 import com.young.vo.Result;
+import com.young.vo.Statistics;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
@@ -87,6 +88,11 @@ public class ProductServiceImpl implements ProductService{
             return Result.ok("商品修改成功！");
         }
         return Result.err(Result.CODE_ERR_BUSINESS,"商品修改失败！");
+    }
+
+    @Override
+    public List<Statistics> statisticsStoreInvent() {
+        return productMapper.statisticsStoreInvent();
     }
 
 }

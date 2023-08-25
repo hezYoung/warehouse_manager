@@ -9,5 +9,7 @@ public interface OutStoreService{
     public Result saveOutStore(OutStore outStore);
     //分页查询出库单的业务方法
     public Page outStorePage(Page page, OutStore outStore);
+    //确定出库的业务方法
+    public Result confirmOutStore(OutStore outStore);
 
 }
