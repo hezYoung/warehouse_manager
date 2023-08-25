@@ -1,6 +1,7 @@
 package com.young.service.impl;
 
 import com.young.mapper.BuyListMapper;
+import com.young.mapper.ProductMapper;
 import com.young.page.Page;
 import com.young.pojo.InStore;
 import com.young.vo.Result;
@@ -15,6 +16,9 @@ import java.util.List;
 
 @Service
 public class InStoreServiceImpl implements InStoreService{
+    //注入ProductMapper
+    @Autowired
+    private ProductMapper productMapper;
 
     @Resource
     private InStoreMapper inStoreMapper;
@@ -52,5 +56,23 @@ public class InStoreServiceImpl implements InStoreService{
         return page;
 
     }
+    //确定入库的业务方法
+    @Transactional//事务处理
+    @Override
+    public Result confirmInStore(InStore inStore) {
+        //根据id将入库单状态改为已入库
+        int i = inStoreMapper.updateIsInById(inStore.getInsId());
+        if(i>0){
+            //根据商品id增加商品库存
+            int j = productMapper.addInventById(inStore.getProductId(), inStore.getInNum());
+            if(j>0){
+                return Result.ok("入库成功！");
+            }
+            return Result.err(Result.CODE_ERR_BUSINESS, "入库失败！");
+        }
+        return Result.err(Result.CODE_ERR_BUSINESS, "入库失败！");
+    }
 
 }
+
+

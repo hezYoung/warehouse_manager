@@ -7,6 +7,9 @@
     #{inNum}, #{createBy}, now(), 0
     )
   </insert>
+  <update id="updateIsInById">
+    update in_store set is_in = 1 where ins_id = #{insId}
+  </update>
   <select id="selectInStoreCount" resultType="java.lang.Integer">
     select count(*)
     from in_store t1, store t2, product t3, user_info t4

@@ -21,5 +21,7 @@ public interface ProductMapper {
     public int deleteProductByIds(List<Integer>  productId);
     //根据商品id修改商品的方法
     public int updateProductById(Product product);
+    //根据商品id增加商品库存的方法
+    public int addInventById(Integer productId, Integer invent);
 
 }

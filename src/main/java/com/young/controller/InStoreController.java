@@ -8,6 +8,7 @@ import com.young.service.InStoreService;
 import com.young.service.StoreService;
 import com.young.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,6 +49,18 @@ public class InStoreController {
         page = inStoreService.queryInStorePage(page, inStore);
         //响应
         return Result.ok(page);
+    }
+    /**
+     * 确定入库的url接口/instore/instore-confirm
+     *
+     * @RequestBody InStore inStore将请求传递的json数据封装到参数InStore对象;
+     */
+    @RequestMapping("/instore-confirm")
+    public Result confirmInStore(@RequestBody InStore inStore){
+        //执行业务
+        Result result = inStoreService.confirmInStore(inStore);
+        //响应
+        return result;
     }
 
 }

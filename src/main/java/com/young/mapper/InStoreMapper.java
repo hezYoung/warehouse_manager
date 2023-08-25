@@ -15,5 +15,7 @@ public interface InStoreMapper {
     //分页查询入库单的方法
     public List<InStore> selectInStorePage(@Param("page") Page page,
                                            @Param("inStore") InStore inStore);
+    //根据id将入库单状态改为已入库的方法
+    public int updateIsInById(Integer insId);
 
 }
