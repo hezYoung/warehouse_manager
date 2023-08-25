@@ -7,6 +7,7 @@ import com.young.service.BuyListService;
 import com.young.service.StoreService;
 import com.young.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,6 +49,18 @@ public class BuyListController {
         page = buyListService.queryPurchasePage(page, buyList);
         //响应
         return Result.ok(page);
+    }
+    /**
+     * 删除采购单的url接口/purchase/purchase-delete/{buyId}
+     *
+     * @PathVariable Integer buyId将路径占位符buyId的值赋值给参数变量buyId;
+     */
+    @RequestMapping("/purchase-delete/{buyId}")
+    public Result deletePurchase(@PathVariable Integer buyId){
+        //执行业务
+        Result result = buyListService.deletePurchase(buyId);
+        //响应
+        return result;
     }
 
 }
