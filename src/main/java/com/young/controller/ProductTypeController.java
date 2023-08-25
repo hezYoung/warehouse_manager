@@ -77,5 +77,4 @@ public class ProductTypeController {
         //响应
         return result;
     }
-
 }

@@ -1,12 +1,17 @@
 package com.young.controller;
 
+import com.young.page.Page;
 import com.young.pojo.BuyList;
+import com.young.pojo.Store;
 import com.young.service.BuyListService;
+import com.young.service.StoreService;
 import com.young.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RequestMapping("/purchase")
 @RestController
@@ -22,6 +27,27 @@ public class BuyListController {
         Result result = buyListService.savePurchase(buyList);
         //响应
         return result;
+    }
+    //注入StoreService
+    @Autowired
+    private StoreService storeService;
+
+    /**
+     * 查询所有仓库的url接口/purchase/store-list
+     */
+    @RequestMapping("/store-list")
+    public Result storeList(){
+        //执行业务
+        List<Store> storeList = storeService.queryAllStore();
+        //响应
+        return Result.ok(storeList);
+    }
+    @RequestMapping("/purchase-page-list")
+    public Result purchasePageList(Page page, BuyList buyList){
+        //执行业务
+        page = buyListService.queryPurchasePage(page, buyList);
+        //响应
+        return Result.ok(page);
     }
 
 }
