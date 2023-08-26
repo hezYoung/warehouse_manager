@@ -5,7 +5,7 @@ package com.young.vo;
  */
 public interface WarehouseConstants {
 
-    //用户未审核
+    //用户没有审核
     public String USER_STATE_NOT_PASS = "0";
 
     //用户已审核
