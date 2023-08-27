@@ -72,9 +72,9 @@ public class LoginController {
                     //密码相匹配
                     CurrentUser currentUser = new CurrentUser(userByCode.getUserId(), userByCode.getUserCode(), userByCode.getUserName());
                     String token = tokenUtils.loginSign(currentUser, userByCode.getUserPwd());
-                    return Result.ok("登录成功", token);
+                    return Result.ok("用户登录成功", token);
                 } else {
-                    return Result.ok("密码错误");
+                    return Result.ok("用户密码错误");
                 }
             } else {
                 return Result.ok("用户没有审核");
