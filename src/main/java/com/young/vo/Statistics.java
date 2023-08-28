@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 统计实体类:
+ * 统计实体类
  */
 @Data
 @NoArgsConstructor
