@@ -11,6 +11,8 @@ import com.young.utils.DigestUtil;
 import com.young.utils.TokenUtils;
 import com.young.vo.Result;
 import com.young.vo.WarehouseConstants;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +25,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
+@Api("登录管理控制器")
 @RestController
 public class LoginController {
     @Resource(name = "captchaProducer")
@@ -36,7 +38,7 @@ public class LoginController {
     private TokenUtils tokenUtils;
     @Autowired
     private AuthService authService;
-
+    @ApiOperation("获得验证码")
     @GetMapping("/captcha/captchaImage")
     public void captchaImage(HttpServletResponse response) throws IOException {
         ServletOutputStream out = null;

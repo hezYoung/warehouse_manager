@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Statistics {
-
     private Integer storeId;//仓库id
 
     private String storeName;//仓库名称
